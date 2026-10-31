@@ -17,6 +17,7 @@ Personal portfolio site for job hunting. Dark, editorial design (near-black, war
 | `public/assets/` | Résumé PDF, headshots, and web-sized work-sample images |
 | `Headshot/`, `MicroSites/`, `Powerpoints/`, `Print Media/`, `RFP_s/`, `Website Linkes for Portfolio.docx` | Original source material. **Not deployed.** |
 | `firebase.json`, `.firebaserc` | Firebase Hosting config (public dir, cache and security headers) |
+| `.github/workflows/` | Auto-deploy on push to `main`, plus PR preview deploys |
 
 ## Confidential content
 
@@ -31,6 +32,21 @@ python3 -m http.server 8000 -d public
 Then open http://localhost:8000.
 
 ## Deploy
+
+### Automatic (GitHub Actions)
+
+- Every push to `main` that changes the site deploys it to the live Firebase Hosting channel (`.github/workflows/firebase-hosting-deploy.yml`). It can also be run manually from the Actions tab.
+- Every pull request gets a temporary preview URL, which expires after 7 days (`.github/workflows/firebase-hosting-preview.yml`).
+
+**One-time setup:** the workflows need a repository secret named `FIREBASE_SERVICE_ACCOUNT_NICHOLAS_KOKAT`. The easiest way to create it is to run this from the repo root on your machine, accepting the prompts to set up GitHub deploys:
+
+```bash
+firebase init hosting:github
+```
+
+That command creates the service account and adds the secret for you. If you create the key by hand, paste the JSON key into *Settings → Secrets and variables → Actions*. Never commit the key.
+
+### Manual
 
 ```bash
 npm install -g firebase-tools
