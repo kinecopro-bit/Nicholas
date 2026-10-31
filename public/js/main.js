@@ -10,6 +10,13 @@ if (list) {
     .join("");
 }
 
+// Open the TEDx accordion when a link points at it
+const acc = document.getElementById("tedx-acc");
+const openTed = () => { if (location.hash === "#tedx" && acc) acc.open = true; };
+addEventListener("hashchange", openTed);
+document.querySelectorAll('a[href="#tedx"]').forEach((a) => a.addEventListener("click", () => { if (acc) acc.open = true; }));
+openTed();
+
 // Count-up metrics
 const fmt = (n, d) => n.toLocaleString("en-US", { minimumFractionDigits: d, maximumFractionDigits: d });
 const count = (el) => {
